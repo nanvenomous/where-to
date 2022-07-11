@@ -5,8 +5,8 @@ dependencies:
 	go mod tidy
 
 install:
-	go build -o fwtg ./find-where-to-go/main.go
-	cp ./fwtg /usr/bin/
+	go build -o find-where-to-go ./find-where-to-go-cli/main.go
+	cp ./find-where-to-go /usr/bin/
 
 # run to get zsh completions
 zsh-completions:
