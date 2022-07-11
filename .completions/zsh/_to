@@ -1,0 +1,16 @@
+#compdef to
+
+_to() {
+
+  local commands
+  commands=()
+  while IFS= read -r line; do
+    nq_line=$(echo  $line | tr -d '"' | sed "s;${HOME};~;")
+    commands+=("$nq_line")
+  done < ~/.config/where-to.yaml
+
+  _describe -t commands 'to commands' commands "$@"
+
+}
+
+_to "$@"
