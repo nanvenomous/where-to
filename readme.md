@@ -17,7 +17,7 @@ for best results install [exa](https://github.com/ogham/exa)
 git clone https://github.com/nanvenomous/where-to.git
 cd where-to
 sudo make install
-sudo cp ./.completions/zhs/_to /use/share/zsh/site-functions
+sudo cp ./.completions/zsh/_to /usr/share/zsh/site-functions
 ```
 
 You need to add the plugin to your shell

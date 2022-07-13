@@ -20,7 +20,7 @@ var initCmd = &cobra.Command{
   headed=$(find-where-to-go $1)
   if ! [ -z $headed ]; then
     builtin cd "${headed}"
-    t
+    clear; exa --tree --level=1 --group-directories-first
   fi
 }
 alias to=go_to
