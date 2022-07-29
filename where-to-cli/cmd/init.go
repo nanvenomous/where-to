@@ -49,7 +49,8 @@ function to() {
   headed=$(find-where-to-go convert $1)
   if ! [ -z $headed ]; then
     builtin cd "${headed}"
-    clear; exa --tree --level=1 --group-directories-first
+    clear
+		t
   fi
 }
 
