@@ -5,7 +5,6 @@ Copyright © 2022 nanvenomous mrgarelli@gmail.com
 package cmd
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"path"
@@ -13,8 +12,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
-
-type NavPaths map[string]string
 
 var (
 	cfgFile    string
@@ -25,8 +22,8 @@ var (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "find-where-to-go",
-	Short: "helper to turn aliases into actual paths on the system",
-	Long:  `helper to turn aliases into actual paths on the system`,
+	Short: "worker utilities to support the to shell function",
+	Long:  `worker utilities to support the to shell function`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if completion != "" {
 			switch completion {
@@ -49,26 +46,6 @@ var rootCmd = &cobra.Command{
 	},
 }
 
-func newCommand(nm string, pth string) *cobra.Command {
-	return &cobra.Command{
-		Use:   nm,
-		Short: pth,
-		Long:  pth,
-		RunE: func(cmd *cobra.Command, args []string) error {
-			var err error
-			flInfo, err := os.Stat(pth)
-			if err != nil {
-				return err
-			}
-			if !flInfo.IsDir() {
-				return errors.New(fmt.Sprintf("%s is not a directory", pth))
-			}
-			fmt.Println(pth)
-			return nil
-		},
-	}
-}
-
 func Execute() {
 	err := rootCmd.Execute()
 	cobra.CheckErr(err)
@@ -76,7 +53,6 @@ func Execute() {
 
 func init() {
 	// cobra.OnInitialize(initConfig)
-	initConfig()
 
 	shells = []string{"bash", "zsh", "fish", "powershell"}
 	rootCmd.SilenceUsage = true
@@ -91,13 +67,6 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/where-to.yaml)")
 
-	var err error
-	var pths NavPaths
-	err = viper.Unmarshal(&pths)
-	cobra.CheckErr(err)
-	for k, v := range pths {
-		rootCmd.AddCommand(newCommand(k, v))
-	}
 }
 
 // initConfig reads in config file and ENV variables if set.
