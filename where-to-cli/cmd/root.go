@@ -6,9 +6,14 @@ package cmd
 
 import (
 	"os"
+	"where-to/system"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+)
+
+var (
+	paths system.NavPaths
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -16,7 +21,9 @@ var rootCmd = &cobra.Command{
 	Use:   "where-to",
 	Short: "your personal driver around your os",
 	Long:  `your personal driver around your os`,
-	// Run: func(cmd *cobra.Command, args []string) { },
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return system.CompletionsOrHelp(cmd)
+	},
 	PersistentPostRunE: func(cmd *cobra.Command, args []string) error {
 		var err error
 		err = viper.WriteConfig()
@@ -37,4 +44,9 @@ func Execute() {
 }
 
 func init() {
+	cobra.OnInitialize(func() {
+		system.InitConfig(&paths)
+	})
+
+	system.CommonFlagsAndCompletions(rootCmd)
 }

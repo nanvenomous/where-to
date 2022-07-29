@@ -33,21 +33,16 @@ type NavPaths map[string]string
 func InitConfig(pths *NavPaths) {
 	var err error
 	if cfgFile != "" {
-		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
-		// Find home directory.
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
-
-		// Search config in home directory with name "adi" (without extension).
 		viper.AddConfigPath(path.Join(home, ".config"))
 		viper.SetConfigName("where-to")
 	}
 
-	viper.AutomaticEnv() // read in environment variables that match
+	viper.AutomaticEnv()
 
-	// If a config file is found, read it in.
 	_ = viper.ReadInConfig()
 	// if err != nil {
 	// 	fmt.Println(err)

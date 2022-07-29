@@ -13,7 +13,7 @@ install:
 # run to get zsh completions
 zsh-completions:
 	sudo mkdir -p "${fpath}"
-	./"${pkgname}" --completion zsh | sudo tee "${fpath}/_${pkgname}" > /dev/null
+	"${pkgname}" --completion zsh | sudo tee "${fpath}/_${pkgname}" > /dev/null
 
 
 .PHONY: help
