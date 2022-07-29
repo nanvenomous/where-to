@@ -5,6 +5,7 @@ Copyright © 2022 nanvenomous mrgarelli@gmail.com
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"where-to/system"
 
@@ -12,45 +13,30 @@ import (
 	"github.com/spf13/viper"
 )
 
-type NavPaths map[string]string
-
-func newCommand(nm string, pth string) *cobra.Command {
-	return &cobra.Command{
-		Use:   nm,
-		Short: pth,
-		Long:  pth,
-		RunE: func(cmd *cobra.Command, args []string) error {
-			var err error
-			err = system.VerifyPath(pth)
-			if err != nil {
-				return err
-			}
-			fmt.Println(pth)
-			return nil
-		},
-	}
-}
-
 // convertCmd represents the convert command
 var convertCmd = &cobra.Command{
 	Use:   "convert",
 	Short: "<alias> converts the argument alias to the path specified in the config",
 	Long:  `<alias> converts the argument alias to the path specified in the config`,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var err error
+
+		if len(args) < 1 {
+			return errors.New("convert required one argument <alias>")
+		}
+		if pth, ok := paths[args[0]]; ok {
+			err = system.VerifyPath(pth)
+			if err != nil {
+				return err
+			}
+			fmt.Println(pth)
+		} else {
+			return errors.New(fmt.Sprintf("the given alias, %s, is not in the config file: %s", args[0], viper.ConfigFileUsed()))
+		}
+		return nil
 	},
 }
 
 func init() {
-	initConfig()
-	var err error
-	var pths NavPaths
-	err = viper.Unmarshal(&pths)
-	cobra.CheckErr(err)
-
-	for k, v := range pths {
-		convertCmd.AddCommand(newCommand(k, v))
-	}
-
 	rootCmd.AddCommand(convertCmd)
-
 }
