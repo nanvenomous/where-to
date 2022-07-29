@@ -10,6 +10,12 @@ import (
 	"github.com/spf13/viper"
 )
 
+var (
+	shells     = []string{"bash", "zsh", "fish", "powershell"}
+	completion string
+	cfgFile    string
+)
+
 func VerifyPath(pth string) error {
 	var err error
 	flInfo, err := os.Stat(pth)
@@ -24,11 +30,11 @@ func VerifyPath(pth string) error {
 
 type NavPaths map[string]string
 
-func InitConfig(cf string, pths *NavPaths) {
+func InitConfig(pths *NavPaths) {
 	var err error
-	if cf != "" {
+	if cfgFile != "" {
 		// Use config file from the flag.
-		viper.SetConfigFile(cf)
+		viper.SetConfigFile(cfgFile)
 	} else {
 		// Find home directory.
 		home, err := os.UserHomeDir()
@@ -49,4 +55,40 @@ func InitConfig(cf string, pths *NavPaths) {
 
 	err = viper.Unmarshal(pths)
 	cobra.CheckErr(err)
+}
+
+func CompletionsOrHelp(cmd *cobra.Command) error {
+	if completion != "" {
+		switch completion {
+		case shells[0]:
+			cmd.Root().GenBashCompletion(os.Stdout)
+		case shells[1]:
+			cmd.Root().GenZshCompletion(os.Stdout)
+		case shells[2]:
+			cmd.Root().GenFishCompletion(os.Stdout, true)
+		case shells[3]:
+			cmd.Root().GenPowerShellCompletionWithDesc(os.Stdout)
+		default:
+			fmt.Println("not a recognized shell")
+			os.Exit(1)
+		}
+		os.Exit(0)
+	} else {
+		cmd.Help()
+	}
+	return nil
+}
+
+func CommonFlagsAndCompletions(cmd *cobra.Command) {
+	cmd.SilenceUsage = true
+	cmd.SilenceErrors = true
+	cmd.CompletionOptions.DisableDefaultCmd = true
+
+	completionFlag := "completion"
+	cmd.PersistentFlags().StringVar(&completion, completionFlag, "", "generate shell completion")
+	cmd.RegisterFlagCompletionFunc(completionFlag, func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		return shells, cobra.ShellCompDirectiveDefault
+	})
+
+	cmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/where-to.yaml)")
 }
