@@ -1,5 +1,5 @@
-pkgname="where-to"
 fpath="/usr/share/zsh/site-functions"
+
 
 dependencies:
 	go mod tidy
@@ -13,7 +13,8 @@ install:
 # run to get zsh completions
 zsh-completions:
 	sudo mkdir -p "${fpath}"
-	"${pkgname}" --completion zsh | sudo tee "${fpath}/_${pkgname}" > /dev/null
+	where-to --completion zsh | sudo tee "${fpath}/_where-to" > /dev/null
+	find-where-to-go --completion zsh | sudo tee "${fpath}/_find-where-to-go" > /dev/null
 
 
 .PHONY: help
