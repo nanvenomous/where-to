@@ -6,9 +6,9 @@ dependencies:
 
 install:
 	go build -o find-where-to-go ./find-where-to-go-cli/main.go
-	cp ./find-where-to-go /usr/bin/
+	mv ./find-where-to-go /usr/bin/
 	go build -o where-to ./where-to-cli/main.go
-	cp ./where-to /usr/bin/
+	mv ./where-to /usr/bin/
 
 # run to get zsh completions
 zsh-completions:

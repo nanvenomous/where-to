@@ -6,7 +6,7 @@ Jump from one place to another on your OS with the help of command completion an
 ![demo](./.rsrc/where-to.gif)
 
 ### Do note
-Currently only works for zsh, but pull requests welcome!
+Currently only works for zsh and bash, but pull requests welcome!
 
 # Dependencies
 for best results install [exa](https://github.com/ogham/exa)
