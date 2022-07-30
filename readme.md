@@ -9,7 +9,10 @@ Jump from one place to another on your OS with the help of command completion an
 Currently only works for zsh, but pull requests welcome!
 
 # Dependencies
-for best results install [exa](https://github.com/ogham/exa)
+
+By default, where-to uses ls to show directories.
+
+You can install [exa](https://github.com/ogham/exa) or [tree](https://gist.github.com/fscm/9eee2784f101f21515d66321180aef0f) for a better experience.
 
 # Installation
 
