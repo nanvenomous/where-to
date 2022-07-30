@@ -1,6 +1,5 @@
 fpath="/usr/share/zsh/site-functions"
 
-
 dependencies:
 	go mod tidy
 
@@ -10,12 +9,17 @@ install:
 	go build -o where-to ./where-to-cli/main.go
 	mv ./where-to /usr/bin/
 
-# run to get zsh completions
 zsh-completions:
 	sudo mkdir -p "${fpath}"
 	where-to --completion zsh | sudo tee "${fpath}/_where-to" > /dev/null
 	find-where-to-go --completion zsh | sudo tee "${fpath}/_find-where-to-go" > /dev/null
+	sudo cp ./.completions/zsh/_to /usr/share/zsh/site-functions
 
+bash-completions:
+	sudo mkdir -p "${fpath}"
+	where-to --completion bash | sudo tee "${fpath}/_where-to" > /dev/null
+	find-where-to-go --completion bash | sudo tee "${fpath}/_find-where-to-go" > /dev/null
+	sudo cp ./.completions/zsh/_to /usr/share/zsh/site-functions
 
 .PHONY: help
 all: help
