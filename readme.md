@@ -1,3 +1,4 @@
+![gopher portal](./.rsrc/gopher.png)
 # where-to
 
 I'm here, I'm there ;)
