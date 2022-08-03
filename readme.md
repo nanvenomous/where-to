@@ -32,7 +32,7 @@ sudo make bash-completions
 
 ### 2. You need to add the plugin to your shell
 
-.zshrc:
+Add the following line to your shell file (i.e. `.bashrc` or `.zshrc`):
 ```
 eval "$(where-to init)"
 ```
@@ -45,6 +45,12 @@ cho: "/home/natsu/projects/adiumads/cho"
 where: "/home/natsu/projects/where-to"
 ani: "/home/natsu/projects/ani-cli"
 ```
+
+The config file maps an alias to a directory on your machine so you can run:
+
+> to [alias]
+
+and you will be navigated to the corresponding directory
 
 ### Shell compatibility
 
