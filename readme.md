@@ -31,6 +31,7 @@ sudo make bash-completions
 ```
 
 ### 2. You need to add the plugin to your shell
+Note: check which shell you are running with `echo "${SHELL}"`
 
 Add the following line to your shell file (i.e. `.bashrc` or `.zshrc`):
 ```
@@ -62,3 +63,6 @@ Pull requests welcome!
 
 # Inspiration
 This project is heavily inspired by [zoxide](https://github.com/ajeetdsouza/zoxide), but has a more declarative approach & focuses on autocompletion rather than fuzzy-finding.
+
+# TODO
+- [ ] publish binaries
