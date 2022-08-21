@@ -1,6 +1,5 @@
 /*
 Copyright © 2022 nanvenomous mrgarelli@gmail.com
-
 */
 package cmd
 
@@ -17,7 +16,7 @@ var addCmd = &cobra.Command{
 	Short: "<alias> <path> add alias to path so you can quickly jump there",
 	Long:  `<alias> <path> add alias to path so you can quickly jump there`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if len(args) < 2 {
+		if len(args) != 2 {
 			return errors.New("expected two arguments <alias> <path>")
 
 		}

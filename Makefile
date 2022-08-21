@@ -1,13 +1,13 @@
 fpath="/usr/share/zsh/site-functions"
 exedir="/usr/local/bin/"
 
-dependencies:
+build:
 	go mod tidy
+	go build -o find-where-to-go ./find-where-to-go-cli/main.go
+	go build -o where-to ./where-to-cli/main.go
 
 install:
-	go build -o find-where-to-go ./find-where-to-go-cli/main.go
 	mv ./find-where-to-go "${exedir}"
-	go build -o where-to ./where-to-cli/main.go
 	mv ./where-to "${exedir}"
 
 zsh-completions:
