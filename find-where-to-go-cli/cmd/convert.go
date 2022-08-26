@@ -1,6 +1,5 @@
 /*
 Copyright © 2022 nanvenomous mrgarelli@gmail.com
-
 */
 package cmd
 
@@ -13,7 +12,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-// convertCmd represents the convert command
 var convertCmd = &cobra.Command{
 	Use:   "convert",
 	Short: "<alias> converts the argument alias to the path specified in the config",

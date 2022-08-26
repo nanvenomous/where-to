@@ -7,7 +7,6 @@ import (
 	"where-to/system"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var (
@@ -20,14 +19,6 @@ var rootCmd = &cobra.Command{
 	Long:  `your personal driver around your os`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return system.CompletionsOrHelp(cmd)
-	},
-	PersistentPostRunE: func(cmd *cobra.Command, args []string) error {
-		var err error
-		err = viper.WriteConfig()
-		if err != nil {
-			return err
-		}
-		return nil
 	},
 }
 
