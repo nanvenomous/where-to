@@ -5,34 +5,46 @@ Copyright © 2022 nanvenomous mrgarelli@gmail.com
 package cmd
 
 import (
-	"fmt"
+	"html/template"
+	"os"
+	"os/exec"
 
 	"github.com/spf13/cobra"
 )
 
-// initCmd represents the init command
-var initCmd = &cobra.Command{
-	Use:   "init",
-	Short: "initializes the 'to' command in the shell with completions",
-	Long:  `initializes the 'to' command in the shell with completions`,
-	Run: func(cmd *cobra.Command, args []string) {
-		zsh_init := `
-function t() {
-  to_go_to="${1}";
-  find-where-to-go isdir $to_go_to
+type TemplateValues struct {
+	T                   string
+	Dn                  string
+	Up                  string
+	To                  string
+	VerticalListCommand string
+}
+
+func commandExists(cmd string) bool {
+	_, err := exec.LookPath(cmd)
+	return err == nil
+}
+
+func getListCommand() string {
+	if commandExists("exa") {
+		return "exa --tree --level=1 --group-directories-first"
+	} else if commandExists("tree") {
+		return "tree -C -L 1 --dirsfirst"
+	}
+	// TODO : handle osx
+	return "ls --color --group-directories-first -1"
+}
+
+const UNIX_INIT = `
+function {{.T}}() {
+  for lastArg in $@; do :; done
+  find-where-to-go isdir $lastArg
   if [ $? -eq 0 ]; then
-    clear
-    if command -v exa &> /dev/null; then 
-      exa --tree --level=1 --group-directories-first ${to_go_to}
-    elif command -v tree &> /dev/null; then 
-      tree -C -L 1 --dirsfirst ${to_go_to}
-    else
-      ls --color --group-directories-first -1 ${to_go_to}
-    fi
+    clear; {{.VerticalListCommand}} ${@:1}
   fi
 }
 
-function dn() {
+function {{.Dn}}() {
   to_go_to="${1}";
   find-where-to-go isdir $to_go_to
 
@@ -40,26 +52,44 @@ function dn() {
     if [ $# -eq 0 ]; then 
       to_go_to=${HOME};
     fi;
-    builtin cd "${to_go_to}"; t
+    builtin cd "${to_go_to}"; clear; {{.VerticalListCommand}}
   fi
 }
-alias up="cd ..; t"
+alias {{.Up}}="cd ..; clear; {{.VerticalListCommand}}"
 
-function to() {
+function {{.To}}() {
   headed=$(find-where-to-go convert $1)
   if ! [ -z $headed ]; then
     builtin cd "${headed}"
-    clear
-		t
+    clear; {{.VerticalListCommand}}
   fi
-}
+}`
 
-`
-		fmt.Println(zsh_init)
+// initCmd represents the init command
+var initCmd = &cobra.Command{
+	Use:   "init",
+	Short: "initializes the shell builtins",
+	Long:  `initializes the shell builtins t, to, dn, up`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var (
+			err        error
+			unxInitTmp *template.Template
+		)
+		unxInitTmp = template.New("Unix_Init_Template")
+		unxInitTmp, err = unxInitTmp.Parse(UNIX_INIT)
+		if err != nil {
+			return err
+		}
+		return unxInitTmp.Execute(os.Stdout, TemplateValues{
+			T:                   "t",
+			Dn:                  "dn",
+			Up:                  "up",
+			To:                  "to",
+			VerticalListCommand: getListCommand(),
+		})
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(initCmd)
-
 }
