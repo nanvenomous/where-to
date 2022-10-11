@@ -37,10 +37,9 @@ func getListCommand() string {
 
 const UNIX_INIT = `
 function {{.T}}() {
-  for lastArg in $@; do :; done
-  find-where-to-go isdir $lastArg
+  find-where-to-go isdir ${@}
   if [ $? -eq 0 ]; then
-    clear; {{.VerticalListCommand}} ${@:1}
+    clear; {{.VerticalListCommand}} ${@}
   fi
 }
 
