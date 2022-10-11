@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func cap(command string, args []string) (string, error) {
+func cap(command string, args []string) (string, string, error) {
 	var outb, errb bytes.Buffer
 	cmd := exec.Command(command, args...)
 
@@ -21,9 +21,9 @@ func cap(command string, args []string) (string, error) {
 
 	err := cmd.Run()
 	if err != nil {
-		return errb.String(), err
+		return "", errb.String(), err
 	}
-	return "", nil
+	return outb.String(), "", nil
 }
 
 func executeWithWhereTo(shell string, toEx string) (string, string, error) {
@@ -73,11 +73,18 @@ func integrationTest(t *testing.T, shell string) error {
 		return err
 	}
 
-	errStr, err = cap("./where-to", []string{"add", "als", "intg_tst/ex/mp/dr/"})
+	_, errStr, err = cap("./where-to", []string{"add", "als", "intg_tst/ex/mp/dr/"})
 	if err != nil {
 		fmt.Println(errStr)
 		return err
 	}
+
+	outStr, errStr, err = cap("./where-to", []string{"list"})
+	if err != nil {
+		fmt.Println(errStr)
+		return err
+	}
+	assert.True(t, strings.Contains(outStr, "als"))
 
 	outStr, errStr, err = executeWithWhereTo(shell, "to als")
 	if err != nil {
@@ -87,6 +94,19 @@ func integrationTest(t *testing.T, shell string) error {
 
 	fmt.Println(outStr)
 	assert.True(t, strings.Contains(outStr, "expected.txt"))
+
+	_, errStr, err = cap("./where-to", []string{"remove", "als"})
+	if err != nil {
+		fmt.Println(errStr)
+		return err
+	}
+
+	outStr, errStr, err = cap("./where-to", []string{"list"})
+	if err != nil {
+		fmt.Println(errStr)
+		return err
+	}
+	assert.False(t, strings.Contains(outStr, "als"))
 
 	err = os.RemoveAll("./intg_tst")
 	return nil
