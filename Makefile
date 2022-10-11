@@ -48,3 +48,6 @@ clean:
 	rm -rf "${fpath}/_to"
 	rm -rf "${fpath}/_where-to"
 	rm -rf "${fpath}/_find-where-to-go"
+
+test:
+	go test -count=1 ./...
