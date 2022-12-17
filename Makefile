@@ -1,4 +1,4 @@
-fpath="/usr/share/zsh/site-functions"
+fpath="/usr/local/share/zsh/site-functions"
 exedir="/usr/local/bin/"
 
 build:
@@ -12,14 +12,14 @@ install:
 
 zsh-completions:
 	mkdir -p "${fpath}"
-	where-to --completion zsh | sudo tee "${fpath}/_where-to" > /dev/null
-	find-where-to-go --completion zsh | sudo tee "${fpath}/_find-where-to-go" > /dev/null
+	where-to --completion zsh > _where-to
+	mv ./_where-to "${fpath}/_where-to"
 	cp ./.completions/zsh/_to "${fpath}"
 
 bash-completions:
 	mkdir -p "${fpath}"
-	where-to --completion bash | sudo tee "${fpath}/_where-to" > /dev/null
-	find-where-to-go --completion bash | sudo tee "${fpath}/_find-where-to-go" > /dev/null
+	where-to --completion bash > _where-to
+	# mv ./_where-to "${fpath}/_where-to"
 	cp ./.completions/zsh/_to "${fpath}"
 
 release:
