@@ -1,6 +1,5 @@
 /*
 Copyright © 2022 nanvenomous mrgarelli@gmail.com
-
 */
 package cmd
 
@@ -9,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/nanvenomous/exfs"
 	"github.com/spf13/cobra"
 )
 
@@ -31,8 +31,22 @@ func getListCommand() string {
 	} else if commandExists("tree") {
 		return "tree -C -L 1 --dirsfirst"
 	}
-	// TODO : handle osx
-	return "ls --color --group-directories-first -1"
+	lsCmd := "ls"
+	exfs.RunOn(&exfs.OperatingSystemRoute{
+		Linux: func() error {
+			lsCmd = "ls --color --group-directories-first -1"
+			return nil
+		},
+		Mac: func() error {
+			lsCmd = "ls -G -1"
+			return nil
+		},
+		Windows: func() error {
+			lsCmd = "dir"
+			return nil
+		},
+	})
+	return lsCmd
 }
 
 const UNIX_INIT = `

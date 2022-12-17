@@ -4,9 +4,10 @@ go 1.18
 
 require (
 	github.com/jedib0t/go-pretty/v6 v6.3.6
+	github.com/nanvenomous/exfs v0.0.8
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.12.0
-	github.com/stretchr/testify v1.7.4
+	github.com/stretchr/testify v1.8.1
 	gopkg.in/yaml.v2 v2.4.0
 )
 
