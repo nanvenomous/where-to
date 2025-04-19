@@ -1,0 +1,12 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - go build -o where-to ./cmd/where-to/main.go
+      - go build -o find-where-to-go ./cmd/find-where-to-go/main.go
