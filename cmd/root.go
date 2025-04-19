@@ -4,7 +4,7 @@ Copyright © 2022 nanvenomous mrgarelli@gmail.com
 package cmd
 
 import (
-	"where-to/system"
+	"github.com/nanvenomous/where-to/system"
 
 	"github.com/nanvenomous/exfs"
 	"github.com/spf13/cobra"

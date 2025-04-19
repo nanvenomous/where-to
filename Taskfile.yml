@@ -10,3 +10,7 @@ tasks:
     cmds:
       - go build -o where-to ./cmd/where-to/main.go
       - go build -o find-where-to-go ./cmd/find-where-to-go/main.go
+  clean:
+    cmds:
+      - rm ./where-to
+      - rm ./find-where-to-go
