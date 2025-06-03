@@ -27,7 +27,7 @@ func commandExists(cmd string) bool {
 
 func getListCommand() string {
 	if commandExists("exa") {
-		return "exa --tree --level=1 --group-directories-first"
+		return "exa --tree --level=0 --group-directories-first"
 	} else if commandExists("tree") {
 		return "tree -C -L 1 --dirsfirst"
 	}
