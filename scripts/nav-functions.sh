@@ -2,8 +2,8 @@
 # Add this to your .bashrc, .zshrc, or shell config
 
 _nav_get_list_command() {
-    if command -v exa >/dev/null 2>&1; then
-        exa --tree --level=0 --group-directories-first
+    if command -v eza >/dev/null 2>&1; then
+        eza --tree --level=1 --group-directories-first
     elif command -v tree >/dev/null 2>&1; then
         tree -C -L 1 --dirsfirst
     else
@@ -16,8 +16,8 @@ _nav_get_list_command() {
 }
 
 _nav_get_files_command() {
-    if command -v exa >/dev/null 2>&1; then
-        exa -1 --group-directories-first | grep -v '/$'
+    if command -v eza >/dev/null 2>&1; then
+        eza --level -1 --group-directories-first | grep -v '/$'
     elif command -v tree >/dev/null 2>&1; then
         tree -C -L 1 -F | grep -v /$
     else

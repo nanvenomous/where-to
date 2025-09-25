@@ -1,6 +1,12 @@
 # nav: a terminal navigation helper
 
-A lightweight Go CLI tool that generates shell functions for enhanced terminal navigation with `up`, `dn`, `to`, and `t` commands.
+A lightweight Go Command Line App that generates shell functions for enhanced terminal navigation with `up`, `dn`, `to`, and `t` commands.
+
+## Why
+
+We all have our aliases and tools for getting around our systems.
+One problem I run into is easily porting said tools to new machines. 
+With nav you can run a few commands and it gets a lot easier to traverse the file system.
 
 ## Installation & Setup
 
@@ -8,14 +14,17 @@ A lightweight Go CLI tool that generates shell functions for enhanced terminal n
    ```bash
    go install github.com/nanvenomous/nav@latest
    # or build locally
+
+   git clone https://github.com/nanvenomous/nav.git
+   cd nav
    go build -o nav
    ```
 
 2. **Add navigation functions to your shell:**
    ```bash
-   eval "$(nav)"              # Current session only
-   nav >> ~/.bashrc           # Add to bash config
-   nav >> ~/.zshrc            # Add to zsh config
+   eval "$(nav)"                        # Run in the current shell only
+   echo 'eval "$(nav)"' >> ~/.bashrc    # add to .bashrc
+   echo 'eval "$(nav)"' >> ~/.zshrc     # add to .zshrc
    ```
 
 3. **Start using the navigation commands:**
@@ -23,6 +32,7 @@ A lightweight Go CLI tool that generates shell functions for enhanced terminal n
    up 2        # Move up 2 directories
    dn mydir    # Move into mydir  
    to          # Interactive navigation with fzf
+   t           # clears terminal and lists files & directories
    ```
 
 ## Commands
@@ -51,11 +61,11 @@ Interactive directory navigation using `fzf`
 ## Features
 
 ### Smart List Command Detection
-Automatically uses the best available directory listing tool:
+Automatically uses available directory listing tools:
 
-1. **exa** (preferred): `exa --tree --level=0 --group-directories-first`
-2. **tree** (fallback): `tree -C -L 1 --dirsfirst`
-3. **ls variants:**
+1. **eza** (preferred): `eza --tree --level=1 --group-directories-first`
+2. **tree** (preferred): `tree -C -L 1 --dirsfirst`
+3. **ls variants (fallback):**
    - Linux: `ls --color=auto --group-directories-first -1`
    - macOS: `ls -G -1`
    - Other: `ls -1`
@@ -85,18 +95,22 @@ to            # Opens fzf interface
 ## Distribution
 
 The CLI tool approach allows for easy distribution:
-
-```bash
-# Package managers
-go install github.com/yourorg/nav@latest
-
-# Direct download
-curl -L https://github.com/yourorg/nav/releases/latest/download/nav > nav
-chmod +x nav
-
-# Then add to shell config
-./nav >> ~/.bashrc
-```
+- From Source
+    ```bash
+    go install github.com/yourorg/nav@latest
+    echo 'eval "$(nav)"' >> ~/.bashrc
+    ```
+- Direct Download
+    ```bash
+    curl -L https://github.com/yourorg/nav/releases/latest/download/nav > nav
+    chmod +x nav
+    echo 'eval "$(nav)"' >> ~/.bashrc
+    ```
+- Source the shell file directly
+    ```bash
+    git clone https://github.com/nanvenomous/nav.git
+    echo 'source ./nav/scripts/nav-functions.sh' >> ~/.bashrc
+    ```
 
 ## Dependencies
 
@@ -106,13 +120,13 @@ chmod +x nav
 
 ### Optional  
 - **fzf** - Required for `to` command interactive navigation
-- **exa** - Enhanced directory listings (recommended)
-- **tree** - Tree-style directory listings (fallback)
+- [eza](https://github.com/eza-community/eza) - Enhanced directory listings (recommended)
+- [tree](https://gitlab.com/OldManProgrammer/unix-tree) - Tree-style directory listings (recommended)
 
 ## Technical Details
 
 This lightweight tool:
-- Generates clean, portable shell functions
+- Generates clean, portable shell functions (see shell functions [here](https://github.com/nanvenomous/nav/blob/mainline/scripts/nav-functions.sh))
 - Provides proper error handling and validation
 - Supports cross-platform directory operations
 - Includes shell completion setup
