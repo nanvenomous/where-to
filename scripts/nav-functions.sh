@@ -139,5 +139,3 @@ fi
 if [ -n "$ZSH_VERSION" ]; then
     compdef '_path_files -/' dn
 fi
-
-echo "Navigation functions loaded: up, dn, to, t"
