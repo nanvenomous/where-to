@@ -57,7 +57,7 @@ if ! git diff --cached --quiet; then
     
     # Push changes and tags
     echo "Pushing to GitHub..."
-    git push origin main
+    git push origin HEAD
     git push origin "v$NEW_VERSION"
     
     echo "✓ Version $NEW_VERSION successfully updated and pushed to GitHub!"

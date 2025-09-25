@@ -9,3 +9,7 @@ tasks:
       - go build -o ./nav ./main.go 
       - echo 'run `eval "$(./nav)"` in your terminal to complete setup'
     silent: true
+  install:
+    desc: "installs binary from source using golang"
+    cmds:
+      - GOPROXY=direct go install github.com/nanvenomous/nav@latest
