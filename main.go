@@ -4,12 +4,14 @@ import (
 	_ "embed"
 	"fmt"
 	"os"
+	"strings"
 )
 
 //go:embed scripts/nav-functions.sh
 var shellFunctions string
 
-const version = "1.0.2"
+//go:embed version
+var version string
 
 func main() {
 	if len(os.Args) > 1 {
@@ -17,7 +19,7 @@ func main() {
 		case "init":
 			fmt.Print(shellFunctions)
 		case "version", "--version", "-v":
-			fmt.Printf("nav %s\n", version)
+			fmt.Printf("nav %s\n", strings.TrimSpace(version))
 		case "help", "--help", "-h":
 			showHelp()
 		default:
@@ -31,7 +33,7 @@ func main() {
 }
 
 func showHelp() {
-	fmt.Printf("Terminal Navigation Helper v%s\n\n", version)
+	fmt.Printf("Terminal Navigation Helper v%s\n\n", strings.TrimSpace(version))
 	fmt.Printf("Usage:\n")
 	fmt.Printf("  nav              Output shell functions for evaluation\n")
 	fmt.Printf("  nav init         Output shell functions for evaluation (alias)\n")
