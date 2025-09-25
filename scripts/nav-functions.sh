@@ -51,11 +51,14 @@ t() {
 }
 
 dn() {
-    if [ -z "$1" ]; then
-        echo "Error: directory name required" >&2
-        return 1
+
+    if [ ! -n "$1" ]; then
+        cd
+        clear
+        _nav_get_list_command
+        return 0
     fi
-    
+
     if [ ! -d "$1" ]; then
         echo "Error: '$1' is not a directory" >&2
         return 1
