@@ -1,3 +1,4 @@
+![gopher portal](./.rsrc/gopher.png)
 # where-to: a terminal navigation helper
 
 A lightweight Go Command Line App that generates shell functions for enhanced terminal navigation with `t`, `dn`, `to`, and `up`  commands.
@@ -23,11 +24,6 @@ With `where-to` you can run a few commands and it gets a lot easier to traverse 
 2. **Install the CLI tool:** (for other install methods see [Distribution](#distribution))
    ```bash
    go install github.com/nanvenomous/where-to@latest
-   # or build locally
-
-   git clone https://github.com/nanvenomous/where-to.git
-   cd where-to
-   go build -o where-to
    ```
 
 3. **Add navigation functions to your shell:**
@@ -90,12 +86,18 @@ The CLI tool approach allows for easy distribution, here are several ways to ins
     git clone https://github.com/nanvenomous/where-to.git
     echo 'source ${HOME}/where-to/scripts/nav-functions.sh' >> ~/.bashrc
     ```
-- From Source
+- From Source (Automatic)
     ```bash
     go install github.com/nanvenomous/where-to@latest
     echo 'eval "$(where-to)"' >> ~/.bashrc
     ```
-
+- From Source (Manual)
+    ```bash
+    git clone https://github.com/nanvenomous/where-to.git
+    cd where-to
+    go build -o where-to # also add this to system path
+    echo 'eval "$(where-to)"' >> ~/.bashrc
+    ```
 
 ## Features
 
@@ -123,8 +125,9 @@ Automatically uses available directory listing tools:
 
 ### Optional  
 - [fzf](https://github.com/junegunn/fzf) - Required for `to` command interactive navigation
-- [eza](https://github.com/eza-community/eza) - Enhanced directory listings (recommended)
-- [tree](https://gitlab.com/OldManProgrammer/unix-tree) - Tree-style directory listings (recommended)
+- Choose one of the following for pretty listing:
+    - [eza](https://github.com/eza-community/eza) - Enhanced directory listings (recommended)
+    - [tree](https://gitlab.com/OldManProgrammer/unix-tree) - Tree-style directory listings (recommended)
 
 ## Technical Details
 
