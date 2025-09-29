@@ -21,3 +21,70 @@ tasks:
       - VHS_NO_SANDBOX=true vhs tapes/to.tape
       # - VHS_NO_SANDBOX=true vhs tapes/up.tape
       - firefox tapes
+  
+  release:
+    desc: "bump version and create GitHub release for all platforms"
+    vars:
+      VERSION: '{{.CLI_ARGS}}'
+    preconditions:
+      - sh: test -n "{{.VERSION}}"
+        msg: "Version is required. Usage: task release -- 1.0.8"
+      - sh: echo "{{.VERSION}}" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$'
+        msg: "Version must be in semver format (e.g., 1.0.8)"
+    cmds:
+      # Update version file
+      - echo "{{.VERSION}}" > version
+      - echo "Updating version to {{.VERSION}}..."
+      
+      # Test build to make sure everything works
+      - echo "Testing build..."
+      - go build -o nav-test
+      - |
+        VERSION_OUTPUT=$(./nav-test version)
+        if [[ $VERSION_OUTPUT == *"{{.VERSION}}"* ]]; then
+          echo "✓ Version update successful: $VERSION_OUTPUT"
+        else
+          echo "✗ Version update failed. Expected {{.VERSION}}, got: $VERSION_OUTPUT"
+          exit 1
+        fi
+      - rm -f nav-test
+      
+      # Stage and commit version change
+      - git add version
+      - git commit -m "bump version to v{{.VERSION}}"
+      - echo "✓ Version committed"
+      
+      # Build cross-platform binaries
+      - mkdir -p dist
+      - rm -rf dist/*
+      - echo "Building cross-platform binaries..."
+      # Build for Linux amd64
+      - GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/nav-linux-amd64 ./main.go
+      # Build for macOS amd64
+      - GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/nav-darwin-amd64 ./main.go
+      # Build for macOS arm64 (Apple Silicon)
+      - GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/nav-darwin-arm64 ./main.go
+      # Build for Windows amd64
+      - GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/nav-windows-amd64.exe ./main.go
+      # Create universal binary for the readme curl command (Linux amd64 as default)
+      - cp dist/nav-linux-amd64 dist/nav
+      - echo "✓ Cross-platform binaries built"
+      
+      # Create git tag and push
+      - git tag -a v{{.VERSION}} -m "Release v{{.VERSION}}"
+      - git push origin HEAD
+      - git push origin v{{.VERSION}}
+      - echo "✓ Git tag v{{.VERSION}} created and pushed"
+      
+      # Create GitHub release
+      - |
+        gh release create v{{.VERSION}} \
+          --title "Release v{{.VERSION}}" \
+          --notes "Release v{{.VERSION}}" \
+          dist/nav-linux-amd64 \
+          dist/nav-darwin-amd64 \
+          dist/nav-darwin-arm64 \
+          dist/nav-windows-amd64.exe \
+          dist/nav
+      - echo "✓ GitHub release v{{.VERSION}} created with all binaries"
+      - echo "✓ Release complete! Users can now run the curl command from the readme"
