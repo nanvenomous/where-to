@@ -93,9 +93,9 @@ The CLI tool approach allows for easy distribution:
     go install github.com/yourorg/nav@latest
     echo 'eval "$(nav)"' >> ~/.bashrc
     ```
-- Direct Download
+- Direct Download (this example for linux, see [releases](https://github.com/nanvenomous/nav/releases) for more options)
     ```bash
-    curl -L https://github.com/nanvenomous/nav/releases/latest/download/nav > nav
+    curl -L https://github.com/nanvenomous/nav/releases/latest/download/nav-linux-amd64 > nav
     chmod +x nav
     echo 'eval "$(nav)"' >> ~/.bashrc
     ```

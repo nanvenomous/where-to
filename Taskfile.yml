@@ -67,7 +67,6 @@ tasks:
       # Build for Windows amd64
       - GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/nav-windows-amd64.exe ./main.go
       # Create universal binary for the readme curl command (Linux amd64 as default)
-      - cp dist/nav-linux-amd64 dist/nav
       - echo "✓ Cross-platform binaries built"
       
       # Create git tag and push
@@ -87,4 +86,4 @@ tasks:
           dist/nav-windows-amd64.exe \
           dist/nav
       - echo "✓ GitHub release v{{.VERSION}} created with all binaries"
-      - echo "✓ Release complete! Users can now run the curl command from the readme"
+      - echo "✓ Release complete!"
