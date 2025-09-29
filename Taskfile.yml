@@ -83,7 +83,6 @@ tasks:
           dist/nav-linux-amd64 \
           dist/nav-darwin-amd64 \
           dist/nav-darwin-arm64 \
-          dist/nav-windows-amd64.exe \
-          dist/nav
+          dist/nav-windows-amd64.exe
       - echo "✓ GitHub release v{{.VERSION}} created with all binaries"
       - echo "✓ Release complete!"
