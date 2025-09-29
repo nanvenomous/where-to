@@ -1,7 +1,20 @@
 ![gopher portal](./.rsrc/gopher.png)
 # where-to: a terminal navigation helper
 
-A lightweight Go Command Line App that generates shell functions for enhanced terminal navigation with `t`, `dn`, `to`, and `up`  commands.
+A lightweight Go Command Line App that generates shell functions for enhanced terminal navigation.
+
+This project focuses primarily on the monotony of the following pattern in shell instructions:
+```bash
+> cd <dir>
+> clear
+> ls
+> cd <dir>
+> clear
+> ls
+...
+```
+
+`where-to` is really just an ergonomic wrapper on the navigational & visually-appealing features of `cd`, `fzf`, `eza`, and `tree` packages.
 
 - [Why](#why)
 - [Installation](#installation)
@@ -14,7 +27,7 @@ A lightweight Go Command Line App that generates shell functions for enhanced te
 
 We all have our aliases and tools for getting around our systems.
 
-One problem I run into is easily porting said tools to new machines. 
+One problem I run into is easily porting said tools to new machines (especially machines without my personal dotfiles). 
 
 With `where-to` you can run a few commands and it gets a lot easier to traverse the file system.
 
