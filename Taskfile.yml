@@ -13,3 +13,11 @@ tasks:
     desc: "installs binary from source using golang"
     cmds:
       - GOPROXY=direct go install github.com/nanvenomous/nav@latest
+  tape:
+    desc: "run integration tapes"
+    cmds:
+      - VHS_NO_SANDBOX=true vhs tapes/dn.tape
+      - VHS_NO_SANDBOX=true vhs tapes/t.tape
+      - VHS_NO_SANDBOX=true vhs tapes/to.tape
+      # - VHS_NO_SANDBOX=true vhs tapes/up.tape
+      - firefox tapes

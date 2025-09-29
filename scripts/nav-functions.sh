@@ -107,7 +107,7 @@ to() {
         fi
         
         local selection=$(echo "$options" | fzf \
-            --prompt "$current_dir" \
+            --prompt "${current_dir}/" \
             --height 40% \
             --layout reverse \
             --border \

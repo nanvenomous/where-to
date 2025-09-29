@@ -1,6 +1,6 @@
 # nav: a terminal navigation helper
 
-A lightweight Go Command Line App that generates shell functions for enhanced terminal navigation with `up`, `dn`, `to`, and `t` commands.
+A lightweight Go Command Line App that generates shell functions for enhanced terminal navigation with `t`, `dn`, `to`, and `up`  commands.
 
 ## Why
 
@@ -10,7 +10,8 @@ With nav you can run a few commands and it gets a lot easier to traverse the fil
 
 ## Installation & Setup
 
-1. **Install the CLI tool:**
+1. Prerequisites: it's recommended to install `fzf` & either `tree` or `eza` commands which nav uses
+2. **Install the CLI tool:**
    ```bash
    go install github.com/nanvenomous/nav@latest
    # or build locally
@@ -20,43 +21,51 @@ With nav you can run a few commands and it gets a lot easier to traverse the fil
    go build -o nav
    ```
 
-2. **Add navigation functions to your shell:**
+3. **Add navigation functions to your shell:**
    ```bash
    eval "$(nav)"                        # Run in the current shell only
    echo 'eval "$(nav)"' >> ~/.bashrc    # add to .bashrc
    echo 'eval "$(nav)"' >> ~/.zshrc     # add to .zshrc
    ```
 
-3. **Start using the navigation commands:**
+4. **Start using the navigation commands:**
    ```bash
-   up 2        # Move up 2 directories
+   t           # clears terminal and lists files & directories
    dn mydir    # Move into mydir  
    to          # Interactive navigation with fzf
-   t           # clears terminal and lists files & directories
+   up 2        # Move up 2 directories
    ```
 
 ## Commands
 
-### `up [levels]`
-Move up directories (equivalent to `cd ..`)
-- **Default:** `up` moves up 1 level
-- **Multi-level:** `up 2` moves up 2 levels, `up 3` moves up 3 levels, etc.
-- **Clears terminal** and lists directory contents after navigation
+### `t`  
+Clears the terminal contents and pretty lists the current directory
+![t tape](tapes/t.gif)
 
 ### `dn <directory>`  
 Move down into a directory (equivalent to `cd <directory>`)
+![dn tape](tapes/dn.gif)
 - **Directory-only:** Only accepts directories, not files
 - **Tab completion:** Supports shell completion for directory names
 - **Clears terminal** and lists directory contents after navigation
 
 ### `to`
 Interactive directory navigation using `fzf`
+![to tape](tapes/to.gif)
 - **File preview:** Shows current directory files at top, then interactive directory selection
 - **Interactive selection:** Navigate directories with fzf
 - **Parent navigation:** Includes `..` option to go up one level  
 - **Continuous loop:** Keeps running until you exit (Escape or Ctrl+C)
 - **Clears terminal** and lists contents after each selection
 - **Requires fzf:** Must have `fzf` installed
+
+### `up [levels]`
+Move up directories (equivalent to `cd ..`)
+![up tape](tapes/up.gif)
+- **Default:** `up` moves up 1 level
+- **Multi-level:** `up 2` moves up 2 levels, `up 3` moves up 3 levels, etc.
+- **Clears terminal** and lists directory contents after navigation
+
 
 ## Features
 
@@ -76,22 +85,6 @@ Automatically uses available directory listing tools:
 - **Error handling:** Proper error messages and validation
 - **Clean output:** Each command clears terminal before showing new directory
 
-## Examples
-
-```bash
-# Navigate up multiple levels
-up 3          # cd ../../../ + clear + list
-
-# Move into subdirectory with completion
-dn <TAB>      # Shows available directories
-dn projects   # cd projects + clear + list
-
-# Interactive navigation
-to            # Opens fzf interface
-              # Select directory or .. to go up
-              # Continues until you exit
-```
-
 ## Distribution
 
 The CLI tool approach allows for easy distribution:
@@ -102,7 +95,7 @@ The CLI tool approach allows for easy distribution:
     ```
 - Direct Download
     ```bash
-    curl -L https://github.com/yourorg/nav/releases/latest/download/nav > nav
+    curl -L https://github.com/nanvenomous/nav/releases/latest/download/nav > nav
     chmod +x nav
     echo 'eval "$(nav)"' >> ~/.bashrc
     ```
@@ -119,7 +112,7 @@ The CLI tool approach allows for easy distribution:
 - **POSIX shell** (bash, zsh, etc.)
 
 ### Optional  
-- **fzf** - Required for `to` command interactive navigation
+- [fzf](https://github.com/junegunn/fzf) - Required for `to` command interactive navigation
 - [eza](https://github.com/eza-community/eza) - Enhanced directory listings (recommended)
 - [tree](https://gitlab.com/OldManProgrammer/unix-tree) - Tree-style directory listings (recommended)
 
