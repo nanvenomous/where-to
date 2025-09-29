@@ -6,13 +6,13 @@ tasks:
   default:
     desc: "build binary"
     cmds:
-      - go build -o ./nav ./main.go 
-      - echo 'run `eval "$(./nav)"` in your terminal to complete setup'
+      - go build -o ./where-to ./main.go 
+      - echo 'run `eval "$(./where-to)"` in your terminal to complete setup'
     silent: true
   install:
     desc: "installs binary from source using golang"
     cmds:
-      - GOPROXY=direct go install github.com/nanvenomous/nav@latest
+      - GOPROXY=direct go install github.com/nanvenomous/where-to@latest
   tape:
     desc: "run integration tapes"
     cmds:
@@ -38,16 +38,16 @@ tasks:
       
       # Test build to make sure everything works
       - echo "Testing build..."
-      - go build -o nav-test
+      - go build -o where-to-test
       - |
-        VERSION_OUTPUT=$(./nav-test version)
+        VERSION_OUTPUT=$(./where-to-test version)
         if [[ $VERSION_OUTPUT == *"{{.VERSION}}"* ]]; then
           echo "✓ Version update successful: $VERSION_OUTPUT"
         else
           echo "✗ Version update failed. Expected {{.VERSION}}, got: $VERSION_OUTPUT"
           exit 1
         fi
-      - rm -f nav-test
+      - rm -f where-to-test
       
       # Stage and commit version change
       - git add version
@@ -59,13 +59,13 @@ tasks:
       - rm -rf dist/*
       - echo "Building cross-platform binaries..."
       # Build for Linux amd64
-      - GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/nav-linux-amd64 ./main.go
+      - GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/where-to-linux-amd64 ./main.go
       # Build for macOS amd64
-      - GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/nav-darwin-amd64 ./main.go
+      - GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/where-to-darwin-amd64 ./main.go
       # Build for macOS arm64 (Apple Silicon)
-      - GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/nav-darwin-arm64 ./main.go
+      - GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/where-to-darwin-arm64 ./main.go
       # Build for Windows amd64
-      - GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/nav-windows-amd64.exe ./main.go
+      - GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/where-to-windows-amd64.exe ./main.go
       # Create universal binary for the readme curl command (Linux amd64 as default)
       - echo "✓ Cross-platform binaries built"
       
@@ -80,9 +80,9 @@ tasks:
         gh release create v{{.VERSION}} \
           --title "Release v{{.VERSION}}" \
           --notes "Release v{{.VERSION}}" \
-          dist/nav-linux-amd64 \
-          dist/nav-darwin-amd64 \
-          dist/nav-darwin-arm64 \
-          dist/nav-windows-amd64.exe
+          dist/where-to-linux-amd64 \
+          dist/where-to-darwin-amd64 \
+          dist/where-to-darwin-arm64 \
+          dist/where-to-windows-amd64.exe
       - echo "✓ GitHub release v{{.VERSION}} created with all binaries"
       - echo "✓ Release complete!"

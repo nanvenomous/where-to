@@ -1,31 +1,40 @@
-# nav: a terminal navigation helper
+# where-to: a terminal navigation helper
 
 A lightweight Go Command Line App that generates shell functions for enhanced terminal navigation with `t`, `dn`, `to`, and `up`  commands.
+
+- [Why](#why)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Distribution](#distribution)
+- [Features](#features)
+- [Dependencies](#dependencies)
 
 ## Why
 
 We all have our aliases and tools for getting around our systems.
+
 One problem I run into is easily porting said tools to new machines. 
-With nav you can run a few commands and it gets a lot easier to traverse the file system.
 
-## Installation & Setup
+With `where-to` you can run a few commands and it gets a lot easier to traverse the file system.
 
-1. Prerequisites: it's recommended to install `fzf` & either `tree` or `eza` commands which nav uses
-2. **Install the CLI tool:**
+## Installation
+
+1. Prerequisites: it's recommended to install `fzf` & either `tree` or `eza` commands (see [Dependencies](#dependencies))
+2. **Install the CLI tool:** (for other install methods see [Distribution](#distribution))
    ```bash
-   go install github.com/nanvenomous/nav@latest
+   go install github.com/nanvenomous/where-to@latest
    # or build locally
 
-   git clone https://github.com/nanvenomous/nav.git
-   cd nav
-   go build -o nav
+   git clone https://github.com/nanvenomous/where-to.git
+   cd where-to
+   go build -o where-to
    ```
 
 3. **Add navigation functions to your shell:**
    ```bash
-   eval "$(nav)"                        # Run in the current shell only
-   echo 'eval "$(nav)"' >> ~/.bashrc    # add to .bashrc
-   echo 'eval "$(nav)"' >> ~/.zshrc     # add to .zshrc
+   eval "$(where-to)"                        # Run in the current shell only
+   echo 'eval "$(where-to)"' >> ~/.bashrc    # add to .bashrc
+   echo 'eval "$(where-to)"' >> ~/.zshrc     # add to .zshrc
    ```
 
 4. **Start using the navigation commands:**
@@ -36,7 +45,7 @@ With nav you can run a few commands and it gets a lot easier to traverse the fil
    up 2        # Move up 2 directories
    ```
 
-## Commands
+## Usage
 
 ### `t`  
 Clears the terminal contents and pretty lists the current directory
@@ -66,6 +75,27 @@ Move up directories (equivalent to `cd ..`)
 - **Multi-level:** `up 2` moves up 2 levels, `up 3` moves up 3 levels, etc.
 - **Clears terminal** and lists directory contents after navigation
 
+## Distribution
+
+The CLI tool approach allows for easy distribution, here are several ways to install:
+- Direct Download (this example for linux, see [releases](https://github.com/nanvenomous/where-to/releases) for more options)
+    ```bash
+    curl -L https://github.com/nanvenomous/where-to/releases/latest/download/where-to-linux-amd64 > where-to
+    chmod +x where-to # must also add this to path
+    echo 'eval "$(where-to)"' >> ~/.bashrc
+    ```
+- Source the shell file directly
+    ```bash
+    cd ${HOME}
+    git clone https://github.com/nanvenomous/where-to.git
+    echo 'source ${HOME}/where-to/scripts/nav-functions.sh' >> ~/.bashrc
+    ```
+- From Source
+    ```bash
+    go install github.com/nanvenomous/where-to@latest
+    echo 'eval "$(where-to)"' >> ~/.bashrc
+    ```
+
 
 ## Features
 
@@ -85,26 +115,6 @@ Automatically uses available directory listing tools:
 - **Error handling:** Proper error messages and validation
 - **Clean output:** Each command clears terminal before showing new directory
 
-## Distribution
-
-The CLI tool approach allows for easy distribution:
-- From Source
-    ```bash
-    go install github.com/yourorg/nav@latest
-    echo 'eval "$(nav)"' >> ~/.bashrc
-    ```
-- Direct Download (this example for linux, see [releases](https://github.com/nanvenomous/nav/releases) for more options)
-    ```bash
-    curl -L https://github.com/nanvenomous/nav/releases/latest/download/nav-linux-amd64 > nav
-    chmod +x nav
-    echo 'eval "$(nav)"' >> ~/.bashrc
-    ```
-- Source the shell file directly
-    ```bash
-    git clone https://github.com/nanvenomous/nav.git
-    echo 'source ./nav/scripts/nav-functions.sh' >> ~/.bashrc
-    ```
-
 ## Dependencies
 
 ### Required
@@ -119,7 +129,7 @@ The CLI tool approach allows for easy distribution:
 ## Technical Details
 
 This lightweight tool:
-- Generates clean, portable shell functions (see shell functions [here](https://github.com/nanvenomous/nav/blob/mainline/scripts/nav-functions.sh))
+- Generates clean, portable shell functions (see shell functions [here](https://github.com/nanvenomous/where-to/blob/mainline/scripts/where-to-functions.sh))
 - Provides proper error handling and validation
 - Supports cross-platform directory operations
 - Includes shell completion setup
