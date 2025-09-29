@@ -19,7 +19,7 @@ func main() {
 		case "init":
 			fmt.Print(shellFunctions)
 		case "version", "--version", "-v":
-			fmt.Printf("nav %s\n", strings.TrimSpace(version))
+			fmt.Printf("where-to %s\n", strings.TrimSpace(version))
 		case "help", "--help", "-h":
 			showHelp()
 		default:
@@ -35,14 +35,14 @@ func main() {
 func showHelp() {
 	fmt.Printf("Terminal Navigation Helper v%s\n\n", strings.TrimSpace(version))
 	fmt.Printf("Usage:\n")
-	fmt.Printf("  nav              Output shell functions for evaluation\n")
-	fmt.Printf("  nav init         Output shell functions for evaluation (alias)\n")
-	fmt.Printf("  nav version      Show version information\n")
-	fmt.Printf("  nav help         Show this help message\n\n")
+	fmt.Printf("  where-to              Output shell functions for evaluation\n")
+	fmt.Printf("  where-to init         Output shell functions for evaluation (alias)\n")
+	fmt.Printf("  where-to version      Show version information\n")
+	fmt.Printf("  where-to help         Show this help message\n\n")
 	fmt.Printf("To set up navigation functions in your shell:\n")
-	fmt.Printf("  eval \"$(nav)\"             # for current session\n")
-	fmt.Printf("  nav >> ~/.bashrc          # for bash\n")
-	fmt.Printf("  nav >> ~/.zshrc           # for zsh\n")
+	fmt.Printf("  eval \"$(where-to)\"             # for current session\n")
+	fmt.Printf("  where-to >> ~/.bashrc          # for bash\n")
+	fmt.Printf("  where-to >> ~/.zshrc           # for zsh\n")
 	fmt.Printf("  source ~/.bashrc          # reload your shell\n\n")
 	fmt.Printf("This will add these commands to your shell:\n")
 	fmt.Printf("  up [levels] - Move up directories (default: 1)\n")

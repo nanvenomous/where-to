@@ -65,7 +65,7 @@ Set Width 1200
 Set Height 600
 
 Hide
-Type@0ms 'eval "$(./nav)"' Enter Sleep 1000ms
+Type@0ms 'eval "$(./where-to)"' Enter Sleep 1000ms
 Type@0ms 'PS1="\w > "; t' Enter
 Show
 
@@ -77,7 +77,7 @@ Enter Sleep 1000ms
 Type "dn ../.."
 Sleep 1000ms
 Enter Sleep 1000ms
-Type "dn nav"
+Type "dn where-to"
 Sleep 1000ms
 Enter
 

@@ -19,8 +19,8 @@ tasks:
       - VHS_NO_SANDBOX=true vhs tapes/dn.tape
       - VHS_NO_SANDBOX=true vhs tapes/t.tape
       - VHS_NO_SANDBOX=true vhs tapes/to.tape
-      # - VHS_NO_SANDBOX=true vhs tapes/up.tape
-      - firefox tapes
+      - VHS_NO_SANDBOX=true vhs tapes/up.tape
+      # - firefox tapes
   
   release:
     desc: "bump version and create GitHub release for all platforms"

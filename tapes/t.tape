@@ -63,7 +63,7 @@ Set Width 1200
 Set Height 600
 
 Hide
-Type@0ms 'eval "$(./nav)"' Enter
+Type@0ms 'eval "$(./where-to)"' Enter
 Type@0ms 'PS1="\w > "' Enter
 Type@0ms 'clear' Enter
 Show
