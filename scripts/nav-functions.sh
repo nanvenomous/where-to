@@ -2,8 +2,10 @@
 # Add this to your .bashrc, .zshrc, or shell config
 
 _nav_get_list_command() {
-    if command -v eza >/dev/null 2>&1; then
-        eza --tree --level=1 --group-directories-first
+    if command -v lsd >/dev/null 2>&1; then
+        lsd --tree --icon always --depth 1 --extensionsort --group-dirs first
+    elif command -v eza >/dev/null 2>&1; then
+        eza --tree --level=1 --group-directories-first --icons
     elif command -v tree >/dev/null 2>&1; then
         tree -C -L 1 --dirsfirst
     else

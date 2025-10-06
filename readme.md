@@ -14,7 +14,7 @@ This project focuses primarily on the monotony of the following pattern in shell
 ...
 ```
 
-`where-to` is really just an ergonomic wrapper on the navigational & visually-appealing features of `cd`, `fzf`, `eza`, and `tree` packages.
+`where-to` is really just an ergonomic wrapper on the navigational & visually-appealing features of `cd`, `fzf`, `lsd`, `eza`, and `tree` packages.
 
 - [Why](#why)
 - [Installation](#installation)
@@ -33,7 +33,7 @@ With `where-to` you can run a few commands and it gets a lot easier to traverse 
 
 ## Installation
 
-1. Prerequisites: it's recommended to install `fzf` & either `tree` or `eza` commands (see [Dependencies](#dependencies))
+1. Prerequisites: it's recommended to install `fzf` & either `lsd`, `eza` or `tree` commands (see [Dependencies](#dependencies))
 2. **Install the CLI tool:** (for other install methods see [Distribution](#distribution))
    ```bash
    go install github.com/nanvenomous/where-to@latest
@@ -117,9 +117,10 @@ The CLI tool approach allows for easy distribution, here are several ways to ins
 ### Smart List Command Detection
 Automatically uses available directory listing tools:
 
-1. **eza** (preferred): `eza --tree --level=1 --group-directories-first`
-2. **tree** (preferred): `tree -C -L 1 --dirsfirst`
-3. **ls variants (fallback):**
+1. **lsd**: `lsd --tree --icon always --depth 1 --extensionsort --group-dirs first`
+2. **eza**: `eza --tree --level=1 --group-directories-first --icons`
+3. **tree**: `tree -C -L 1 --dirsfirst`
+4. **ls variants (fallback):**
    - Linux: `ls --color=auto --group-directories-first -1`
    - macOS: `ls -G -1`
    - Other: `ls -1`
@@ -138,9 +139,10 @@ Automatically uses available directory listing tools:
 
 ### Optional  
 - [fzf](https://github.com/junegunn/fzf) - Required for `to` command interactive navigation
-- Choose one of the following for pretty listing:
-    - [eza](https://github.com/eza-community/eza) - Enhanced directory listings (recommended)
-    - [tree](https://gitlab.com/OldManProgrammer/unix-tree) - Tree-style directory listings (recommended)
+- Choose one of the following for enhanced directory listing:
+    - [lsd](https://github.com/lsd-rs/lsd)
+    - [eza](https://github.com/eza-community/eza)
+    - [tree](https://gitlab.com/OldManProgrammer/unix-tree)
 
 ## Technical Details
 
