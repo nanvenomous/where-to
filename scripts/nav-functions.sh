@@ -48,8 +48,17 @@ up() {
 }
 
 t() {
-    clear
-    _nav_get_list_command
+    if [ -n "$1" ]; then
+        if [ ! -d "$1" ]; then
+            echo "Error: '$1' is not a directory" >&2
+            return 1
+        fi
+        clear
+        (cd "$1" && _nav_get_list_command)
+    else
+        clear
+        _nav_get_list_command
+    fi
 }
 
 dn() {
@@ -138,9 +147,11 @@ to() {
 # Set up bash completion
 if [ -n "$BASH_VERSION" ]; then
     complete -o nospace -o dirnames dn
+    complete -o nospace -o dirnames t
 fi
 
 # Set up zsh completion  
 if [ -n "$ZSH_VERSION" ]; then
     compdef '_path_files -/' dn
+    compdef '_path_files -/' t
 fi
