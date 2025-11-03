@@ -130,6 +130,9 @@ to() {
             cd "$selection" || break
         fi
     done
+    
+    clear
+    _nav_get_list_command
 }
 
 # Set up bash completion
