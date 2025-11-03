@@ -31,6 +31,19 @@ _nav_get_files_command() {
     fi
 }
 
+_nav_show_git_status() {
+    if [ -d .git ]; then
+        echo
+        git status -sb
+    fi
+}
+
+_nav_display_with_git() {
+    clear
+    _nav_get_list_command
+    _nav_show_git_status
+}
+
 up() {
     local levels=${1:-1}
     
@@ -43,8 +56,7 @@ up() {
         cd .. || return 1
     done
     
-    clear
-    _nav_get_list_command
+    _nav_display_with_git
 }
 
 t() {
@@ -53,11 +65,9 @@ t() {
             echo "Error: '$1' is not a directory" >&2
             return 1
         fi
-        clear
-        (cd "$1" && _nav_get_list_command)
+        (cd "$1" && _nav_display_with_git)
     else
-        clear
-        _nav_get_list_command
+        _nav_display_with_git
     fi
 }
 
@@ -65,8 +75,7 @@ dn() {
 
     if [ ! -n "$1" ]; then
         cd
-        clear
-        _nav_get_list_command
+        _nav_display_with_git
         return 0
     fi
 
@@ -76,8 +85,7 @@ dn() {
     fi
     
     cd "$1" || return 1
-    clear
-    _nav_get_list_command
+    _nav_display_with_git
 }
 
 to() {
@@ -140,8 +148,7 @@ to() {
         fi
     done
     
-    clear
-    _nav_get_list_command
+    _nav_display_with_git
 }
 
 # Set up bash completion
