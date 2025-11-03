@@ -23,7 +23,7 @@ tasks:
       # - firefox tapes
   
   release:
-    desc: "bump version and create GitHub release for all platforms"
+    desc: "<1.2.3> bump version and create GitHub release for all platforms"
     vars:
       VERSION: '{{.CLI_ARGS}}'
     preconditions:

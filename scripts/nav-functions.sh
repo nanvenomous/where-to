@@ -32,9 +32,10 @@ _nav_get_files_command() {
 }
 
 _nav_show_git_status() {
-    if [ -d .git ]; then
+    local git_cmd="{{GIT_STATUS_COMMAND}}"
+    if [ -n "$git_cmd" ] && [ -d .git ]; then
         echo
-        git status -sb
+        eval $git_cmd
     fi
 }
 
